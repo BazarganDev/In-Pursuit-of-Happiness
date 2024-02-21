@@ -27,7 +27,7 @@ stdscr.nodelay(True)
 max_lines = curses.LINES - 1
 max_columns = curses.COLS - 1
 
-# Create a world and a player and a happiness and a bunch of negative people
+# Create a world and a player and a happiness and a bunch of evils
 world = []
 happinesses = []
 evils = []
