@@ -3,7 +3,7 @@
 # Never be disappointed in your life. Keep going. No matter what.     #
 # Always avoid negative people (evils in this case).                  #
 # Always have a smile on your beautiful face.                         #
-# Take care.
+# Take care.                                                          #
 # :)                                                                  #
 #######################################################################
 
