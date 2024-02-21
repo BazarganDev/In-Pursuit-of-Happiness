@@ -5,7 +5,9 @@ This game is a creation of an imaginary world in my mind.
 There is a human (player), goals that makes the human happy and a bunch of evils (negative people). Those evils can smell and kill humans that want to be happy. They have killed everyone and now they want to kill you to prevent you from being happy. All you have to is to avoid these evils and achieve happinesses as much as you can.
 
 🙂 => Player
+
 💀 => Evil
+
 🌅 => Happiness
 
 ## How To Play
