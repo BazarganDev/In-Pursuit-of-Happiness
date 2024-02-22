@@ -17,6 +17,8 @@ import time
 
 # Initialize the curses
 stdscr = curses.initscr()
+curses.start_color()
+curses.use_default_colors()
 curses.noecho()
 curses.cbreak()
 curses.curs_set(False)
@@ -31,9 +33,9 @@ max_columns = curses.COLS - 1
 world = []
 happinesses = []
 evils = []
-player_character = "🙂"
-happiness_character = "🌅"
-evil_character = "💀"
+player_character = "X"
+happiness_character = "H"
+evil_character = "E"
 happiness_meter = 0
 player_x = 0
 player_y = 0
@@ -88,20 +90,20 @@ def draw():
             stdscr.addch(i, j, world[i][j])
     
     # Show happiness meter
-    stdscr.addstr(1, 1, f"Happiness Meter: {happiness_meter}")
+    stdscr.addstr(1, 1, f"Happiness Meter: {happiness_meter}", curses.A_BOLD)
 
     # Draw the initialized happinesses
     for h in happinesses:
         happiness_x, happiness_y = h
-        stdscr.addch(happiness_x, happiness_y, happiness_character)
+        stdscr.addch(happiness_x, happiness_y, happiness_character, curses.color_pair(3))
     
     # Draw the initialized evils
     for e in evils:
         evil_x, evil_y = e
-        stdscr.addch(evil_x, evil_y, evil_character)
+        stdscr.addch(evil_x, evil_y, evil_character, curses.color_pair(2))
 
     # Create a player and a happiness in the world with given coordinates
-    stdscr.addch(player_x, player_y, player_character)
+    stdscr.addch(player_x, player_y, player_character, curses.color_pair(4))
     stdscr.refresh()
 
 def border(n, minimum, maximum):
@@ -143,26 +145,27 @@ def move_evils():
     
     # Evils can move around. They smell people like you that want happiness in their life.
     # The question is: Will you be able to avoid them?
+    # Remember that evils hould not be able to get pass the obstacles.
     for i in range(len(evils)):
         evil_x, evil_y = evils[i]
         if random.random() > 0.95:
-            if evil_x > player_x:
+            if evil_x > player_x and world[evil_x - 1][evil_y] != '.':
                 evil_x -= 1
         if random.random() > 0.95:
-            if evil_x < player_x:
+            if evil_x < player_x and world[evil_x + 1][evil_y] != '.':
                 evil_x += 1
         if random.random() > 0.95:
-            if evil_y > player_y:
+            if evil_y > player_y and world[evil_x][evil_y - 1] != '.':
                 evil_y -= 1
         if random.random() > 0.95:
-            if evil_y < player_y:
+            if evil_y < player_y and world[evil_x][evil_y + 1] != '.':
                 evil_y += 1
             evil_x = border(evil_x, 0, max_lines - 1)
             evil_y = border(evil_y, 0, max_columns - 1)
             evils[i] = (evil_x, evil_y)
         # If you contact with an evil, you will DIE
         if evil_x == player_x and evil_y == player_y:
-            stdscr.addstr(max_lines//2, max_columns//2, "YOU DIED!")
+            stdscr.addstr(max_lines//2, max_columns//2, "YOU DIED!", curses.color_pair(2))
             stdscr.refresh()
             time.sleep(3)
             playing = False
@@ -189,6 +192,9 @@ def how_is_life():
             happinesses[i] = (new_happiness_x, new_happiness_y)
 
 def main():
+    for i in range(0, curses.COLORS):
+        curses.init_pair(i+1, i, curses.COLOR_BLACK)
+    
     init()
     
     global playing
@@ -210,9 +216,9 @@ def main():
 
 main()
 
-stdscr.addstr(max_lines//2, max_columns//2, "THANKS FOR PLAYING")
+stdscr.addstr(max_lines//2, max_columns//2, "THANKS FOR PLAYING", curses.color_pair(3))
 stdscr.refresh()
-stdscr.addstr(max_lines//2 + 1, max_columns//2, "ALWAYS BE HAPPY")
+stdscr.addstr(max_lines//2 + 1, max_columns//2, "ALWAYS BE HAPPY", curses.color_pair(3))
 stdscr.refresh()
 time.sleep(3)
 stdscr.clear()
