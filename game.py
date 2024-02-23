@@ -206,7 +206,7 @@ def move_evils():
             evils[i] = (evil_x, evil_y)
         # If you contact with an evil, you will DIE
         if evil_x == player_x and evil_y == player_y:
-            stdscr.addstr(max_lines//2, max_columns//2, "YOU DIED!", curses.color_pair(2))
+            stdscr.addstr(max_lines//2, max_columns//2 - 4, "YOU DIED!", curses.color_pair(2))
             stdscr.refresh()
             playsound(gameover_sound)
             time.sleep(3)
@@ -260,9 +260,9 @@ def main():
 
 main()
 
-stdscr.addstr(max_lines//2, max_columns//2, "THANKS FOR PLAYING", curses.color_pair(3))
+stdscr.addstr(max_lines//2, max_columns//2 - 9, "THANKS FOR PLAYING!", curses.color_pair(3))
 stdscr.refresh()
-stdscr.addstr(max_lines//2 + 1, max_columns//2, "ALWAYS BE HAPPY", curses.color_pair(3))
+stdscr.addstr(max_lines//2 + 1, max_columns//2 - 7, "ALWAYS BE HAPPY", curses.color_pair(3))
 stdscr.refresh()
 time.sleep(3)
 stdscr.clear()
