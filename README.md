@@ -17,7 +17,11 @@ W => Pond
 
    `git clone https://github.com/BazarganDev/In-Pursuit-of-Happiness.git`
 
-2. If you are on a Windows, you need to install `curses` for Windows:
+2. Install required modules from `requirements.txt`:
+
+   `pip install -r requirements.txt`
+   
+   If you are on a Windows, you need to install `curses` for Windows:
 
    `pip install windows-curses`
 
