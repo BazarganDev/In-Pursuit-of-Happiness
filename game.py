@@ -117,7 +117,7 @@ def draw():
     for p in ponds:
         pond_x, pond_y = p
         stdscr.addch(pond_x, pond_y, pond_character, curses.color_pair(5))
-        # This pond should not be on an obstacle or a happiness
+        # A pond should not be on an obstacle or a happiness
         while world[pond_x][pond_y] == '.' and happinesses[(pond_x, pond_y)] == (pond_x, pond_y):
             stdscr.addch(pond_x, pond_y, pond_character, curses.color_pair(5))
 
