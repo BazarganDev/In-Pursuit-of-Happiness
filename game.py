@@ -31,7 +31,7 @@ stdscr.nodelay(True)
 max_lines = curses.LINES - 1
 max_columns = curses.COLS - 1
 
-# Define variables, address sound files and also other similar stuff is gonna be here
+# Defining variables, addressing sound files and also other similar stuff is gonna be here
 world = []
 happinesses = []
 evils = []
