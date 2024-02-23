@@ -1,7 +1,7 @@
 # In Pursuit of Happiness
 I had an imaginary world in my mind. So I brought it to life.
 
-Thanks to a very dear and kind person, Jadi :)
+Thanks to a very dear person, Jadi :)
 
 Go check him out on YT: [Jadi Mirmirani](https://www.youtube.com/JadiMirmirani)
 
