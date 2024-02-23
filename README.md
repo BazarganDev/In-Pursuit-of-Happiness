@@ -2,13 +2,15 @@
 This game is a creation of an imaginary world in my mind.
 
 ## Story
-There is a human (player), goals that makes the human happy and a bunch of evils (negative people). Those evils can smell and kill humans that want to be happy. They have killed everyone and now they want to kill you to prevent you from being happy. All you have to do is to avoid these evils and achieve happinesses as much as you can.
+There is a human (player), goals that makes the human happy, ponds, and a bunch of evils (negative people). Those evils can smell and kill humans that want to be happy. They have killed everyone and now they want to kill you to prevent you from being happy. All you have to do is to avoid these evils and achieve happinesses as much as you can. Also if you step into a pond, you'll be drown.
 
 X => Player
 
 E => Evil
 
 H => Happiness
+
+W => Pond
 
 ## How To Play
 1. Clone this repository:
