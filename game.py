@@ -145,7 +145,7 @@ def move_evils():
     
     # Evils can move around. They smell people like you that want happiness in their life.
     # The question is: Will you be able to avoid them?
-    # Remember that evils hould not be able to get pass the obstacles.
+    # Remember that evils should not be able to get pass the obstacles.
     for i in range(len(evils)):
         evil_x, evil_y = evils[i]
         if random.random() > 0.95:
