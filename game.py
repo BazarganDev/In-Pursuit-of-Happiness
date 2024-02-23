@@ -9,9 +9,11 @@
 
 
 # Import modules
+from playsound import playsound
 import curses
 import random
 import time
+import os
 
 
 
@@ -29,17 +31,22 @@ stdscr.nodelay(True)
 max_lines = curses.LINES - 1
 max_columns = curses.COLS - 1
 
-# Create a world and a player and a happiness and a bunch of evils
+# Define variables, address sound files and also other similar stuff is gonna be here
 world = []
 happinesses = []
 evils = []
+ponds = []
 player_character = "X"
 happiness_character = "H"
 evil_character = "E"
+pond_character = "W"
+beep_sound = os.path.join('sound', 'soft_beep.wav')
+gameover_sound = os.path.join('sound', 'gameover.wav')
 happiness_meter = 0
 player_x = 0
 player_y = 0
 
+# Functions
 def set_coordinates():
     """
     Specify random coordinates that is not taken by an obstacle.
@@ -52,7 +59,6 @@ def set_coordinates():
         y = random.randint(0, max_columns)
     
     return x, y
-
 
 def init():
     """
@@ -68,14 +74,19 @@ def init():
             world[i].append(' ' if random.random() > 0.05 else '.')
     
     # Initialize a happiness
-    for i in range(10):
+    for i in range(15):
         happiness_x, happiness_y = set_coordinates()
         happinesses.append((happiness_x, happiness_y))
     
     # Initialize evils
-    for i in range(20):
+    for i in range(8):
         evil_x, evil_y = set_coordinates()
         evils.append((evil_x, evil_y))
+    
+    # Initialize ponds
+    for i in range(22):
+        pond_x, pond_y = set_coordinates()
+        ponds.append((pond_x, pond_y))
    
     # Set random coordinates to the player in the world
     player_x, player_y = set_coordinates()
@@ -101,6 +112,14 @@ def draw():
     for e in evils:
         evil_x, evil_y = e
         stdscr.addch(evil_x, evil_y, evil_character, curses.color_pair(2))
+    
+    # Draw the initialized ponds
+    for p in ponds:
+        pond_x, pond_y = p
+        stdscr.addch(pond_x, pond_y, pond_character, curses.color_pair(5))
+        # This pond should not be on an obstacle or a happiness
+        while world[pond_x][pond_y] == '.' and happinesses[(pond_x, pond_y)] == (pond_x, pond_y):
+            stdscr.addch(pond_x, pond_y, pond_character, curses.color_pair(5))
 
     # Create a player and a happiness in the world with given coordinates
     stdscr.addch(player_x, player_y, player_character, curses.color_pair(4))
@@ -117,21 +136,43 @@ def border(n, minimum, maximum):
         return minimum
     return n
 
+def drowning(x, y):
+    """
+    If the player steps into a pond, then the player drowns to death!
+    """
+    global playing
+    
+    for p in ponds:
+        pond_x, pond_y = p
+        if x == pond_x and y == pond_y:
+            stdscr.addstr(max_lines//2, max_columns//2 - 4, "YOU DROWNED!", curses.color_pair(5))
+            stdscr.refresh()
+            playsound(gameover_sound)
+            time.sleep(2)
+            playing = False
+        else:
+            pass
+
 def move_player(character):
     """
     You know ADWS keys right? They make the player move in games :)
     When player is moving around, it shouldn't move over the obstacles.
     """
     global player_x, player_y
-
+    
+    # The player should not be able to get pass the obstacles and ponds
     if character == 'w' and world[player_x - 1][player_y] != '.':
         player_x -= 1
+        drowning(player_x, player_y)
     elif character == 's' and world[player_x + 1][player_y] != '.':
         player_x += 1
+        drowning(player_x, player_y)
     elif character == 'a' and world[player_x][player_y - 1] != '.':
         player_y -= 1
+        drowning(player_x, player_y)
     elif character == 'd' and world[player_x][player_y + 1] != '.':
         player_y += 1
+        drowning(player_x, player_y)
 
     player_x = border(player_x, 0, max_lines - 1)
     player_y = border(player_y, 0, max_columns - 1)
@@ -167,6 +208,7 @@ def move_evils():
         if evil_x == player_x and evil_y == player_y:
             stdscr.addstr(max_lines//2, max_columns//2, "YOU DIED!", curses.color_pair(2))
             stdscr.refresh()
+            playsound(gameover_sound)
             time.sleep(3)
             playing = False
 
@@ -188,6 +230,8 @@ def how_is_life():
         happiness_x, happiness_y = happinesses[i]
         if happiness_x == player_x and happiness_y == player_y:
             happiness_meter += 5
+            if happiness_meter % 100 == 0:
+                playsound(beep_sound)
             new_happiness_x, new_happiness_y = set_coordinates()
             happinesses[i] = (new_happiness_x, new_happiness_y)
 
@@ -197,7 +241,7 @@ def main():
     
     init()
     
-    global playing
+    global playing, player_x, player_y
     
     playing = True
     while playing:
