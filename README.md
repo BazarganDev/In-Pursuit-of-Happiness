@@ -25,7 +25,5 @@ H => Happiness
 - Press "Q" to quit the game.
 
 ## TODO
-- [ ] Add a simple timer
 - [ ] Add sound effects
-- [ ] Add levels
 - [x] Add ponds
