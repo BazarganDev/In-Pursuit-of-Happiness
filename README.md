@@ -25,5 +25,6 @@ H => Happiness
 - Press "Q" to quit the game.
 
 ## TODO
-- [ ] Add sound effects
+- [x] Add sound effects
 - [x] Add ponds
+- [ ] Fix bugs related to proper character coordinating
