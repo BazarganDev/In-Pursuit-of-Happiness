@@ -121,7 +121,7 @@ def draw():
         while world[pond_x][pond_y] == '.' and happinesses[(pond_x, pond_y)] == (pond_x, pond_y):
             stdscr.addch(pond_x, pond_y, pond_character, curses.color_pair(5))
 
-    # Create a player and a happiness in the world with given coordinates
+    # Create a player in the world with given coordinates
     stdscr.addch(player_x, player_y, player_character, curses.color_pair(4))
     stdscr.refresh()
 
