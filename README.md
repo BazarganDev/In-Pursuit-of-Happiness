@@ -37,4 +37,5 @@ W => Pond
 ## TODO
 - [x] Add sound effects
 - [x] Add ponds
-- [ ] Fix bugs related to proper character coordinating
+- [ ] Enemy should not be able to get pass a pond
+- [ ] Fix bugs related to proper coordinating
