@@ -50,13 +50,15 @@ player_y = 0
 def set_coordinates():
     """
     Specify random coordinates that is not taken by an obstacle.
+    The amount of maximum lines and columns to prevent from bugs related to coordinating.
+    Therefore some happinesses or ponds will be unavailable.
     """
-    x = random.randint(0, max_lines)
-    y = random.randint(0, max_columns)
+    x = random.randint(0, max_lines - 1)
+    y = random.randint(0, max_columns - 1)
 
     while world[x][y] != ' ':
-        x = random.randint(0, max_lines)
-        y = random.randint(0, max_columns)
+        x = random.randint(0, max_lines - 1)
+        y = random.randint(0, max_columns - 1)
     
     return x, y
 
@@ -148,10 +150,20 @@ def drowning(x, y):
             stdscr.addstr(max_lines//2, max_columns//2 - 4, "YOU DROWNED!", curses.color_pair(5))
             stdscr.refresh()
             playsound(gameover_sound)
-            time.sleep(2)
+            time.sleep(1)
             playing = False
         else:
             pass
+
+def destroy_happiness(x, y):
+    """
+    An evil can destroy a happiness.
+    """
+    for i in range(len(happinesses)):
+        happiness_x, happiness_y = happinesses[i]
+        if happiness_x == x and happiness_y == y:
+            new_happiness_x, new_happiness_y = set_coordinates()
+            happinesses[i] = (new_happiness_x, new_happiness_y)
 
 def move_player(character):
     """
@@ -187,20 +199,25 @@ def move_evils():
     # Evils can move around. They smell people like you that want happiness in their life.
     # The question is: Will you be able to avoid them?
     # Remember that evils should not be able to get pass the obstacles.
+    # In fact they can hide in a pond or destroy a happiness.
     for i in range(len(evils)):
         evil_x, evil_y = evils[i]
         if random.random() > 0.95:
             if evil_x > player_x and world[evil_x - 1][evil_y] != '.':
                 evil_x -= 1
+                destroy_happiness(evil_x, evil_y)
         if random.random() > 0.95:
             if evil_x < player_x and world[evil_x + 1][evil_y] != '.':
                 evil_x += 1
+                destroy_happiness(evil_x, evil_y)
         if random.random() > 0.95:
             if evil_y > player_y and world[evil_x][evil_y - 1] != '.':
                 evil_y -= 1
+                destroy_happiness(evil_x, evil_y)
         if random.random() > 0.95:
             if evil_y < player_y and world[evil_x][evil_y + 1] != '.':
                 evil_y += 1
+                destroy_happiness(evil_x, evil_y)
             evil_x = border(evil_x, 0, max_lines - 1)
             evil_y = border(evil_y, 0, max_columns - 1)
             evils[i] = (evil_x, evil_y)
@@ -209,7 +226,7 @@ def move_evils():
             stdscr.addstr(max_lines//2, max_columns//2 - 4, "YOU DIED!", curses.color_pair(2))
             stdscr.refresh()
             playsound(gameover_sound)
-            time.sleep(3)
+            time.sleep(1)
             playing = False
 
 
