@@ -37,4 +37,4 @@ W => Pond
 ## TODO
 - [x] Add sound effects
 - [x] Add ponds
-- [ ] Fix bugs related to proper coordinating
+- [x] Fix bugs related to proper coordinating
