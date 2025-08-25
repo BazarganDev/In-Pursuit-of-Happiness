@@ -1,10 +1,6 @@
 # In Pursuit of Happiness
 I had an imaginary world in my mind. So I brought it to life.
 
-Thanks to a very dear person, Jadi :)
-
-Go check him out on YT: [Jadi Mirmirani](https://www.youtube.com/JadiMirmirani)
-
 ## Story
 There is a human (player), goals that makes the human happy, ponds, and a bunch of evils (negative people). Those evils can smell and kill humans that want to be happy. They have killed everyone and now they want to kill you to prevent you from being happy. All you have to do is to avoid these evils and achieve happinesses as much as you can. Also if you step into a pond, you'll be drown.
 
